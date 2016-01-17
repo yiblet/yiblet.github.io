@@ -1,0 +1,17 @@
+{
+  "name": "yiblet",
+  "version": "1.0.0",
+  "description": "Simple Homepage",
+  "main": "index.js",
+  "scripts": {
+    "test": "live-server "
+  },
+  "author": "Shalom Yiblet",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.4.8",
+    "bootstrap": "^3.3.6",
+    "browserify": "^13.0.0",
+    "jquery": "^2.2.0"
+  }
+}
