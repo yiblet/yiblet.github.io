@@ -1,0 +1,60 @@
+
+
+.frontpage{
+}
+
+.frontname{
+  font-size:6em;
+  color:inherit;
+  margin-top:10vh;
+}
+
+.fa{
+    font-size:3.4em;
+    -webkit-transition: all 0.2s 0s ease;
+    -moz-transition: all 0.2s 0s ease;
+    -ms-transition: all 0.2s 0s ease;
+    -o-transition: all 0.2s 0s ease;
+    transition: all 0.2s 0s ease;
+}
+
+.icon-text{
+    -webkit-transition: all 0.2s 0s ease;
+    -moz-transition: all 0.2s 0s ease;
+    -ms-transition: all 0.2s 0s ease;
+    -o-transition: all 0.2s 0s ease;
+    transition: all 0.2s 0s ease;
+    color:white;
+    text-decoration-color: white;
+}
+
+.icon-text:hover, .icon-text:hover, a:hover .icon-text, a:hover .fa, a:hover .icon-text, a:hover .fa{
+    color:white;
+    text-decoration-color: white;
+}
+
+.fa:hover{
+    font-size:3.7em;
+    color:inherit;
+    padding-bottom: 0px;
+}
+
+body{
+    background-color:#262626;
+    color:white;
+    text-decoration-color: white;
+    font-size: max(2vmin, 10px);
+}
+
+.frontpage-row{
+    margin-top:30vh;
+}
+
+a, a:link, a:hover, a:visited{
+    color:white;
+    text-decoration-color: white;
+}
+
+h5{
+    font-size:1.1em;
+}
