@@ -20,7 +20,7 @@ app.controller('iconController', function(){
     {
       name: 'fa-file-pdf-o',
       text: 'resume',
-      href: 'others/resume.pdf'
+      href: 'build/others/resume.pdf'
     }
   ]
 })

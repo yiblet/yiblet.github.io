@@ -35,8 +35,13 @@ gulp.task('css', function () {
 });
 
 gulp.task('html', function () {
-  return gulp.src(`${srcDir}/**/*.html`)
+  return gulp.src([`${srcDir}/**/*.html`, `!${srcDir}/**/*index.html`])
   .pipe(gulp.dest(destDir));
+});
+
+gulp.task('index', function () {
+  return gulp.src(`${srcDir}/**/*index.html`)
+  .pipe(gulp.dest(""));
 });
 
 gulp.task('fonts', function () {
@@ -49,13 +54,14 @@ gulp.task('others', function(){
   .pipe(gulp.dest(`${destDir}/others`));
 })
 
-gulp.task('build', ['browserify', 'fonts', 'vendors', 'css','html', 'others'], function(){
+gulp.task('build', ['browserify', 'fonts', 'vendors', 'css','html','index', 'others'], function(){
 })
 
 
 gulp.task('watch', ['build'], function () {
   gulp.watch([`${srcDir}/**/*.js`], ['browserify']);
-  gulp.watch([`${srcDir}/**/*.html`], ['html']);
+  gulp.watch([`${srcDir}/**/*.html`, `!${srcDir}/**/*index.html`], ['html']);
+  gulp.watch([`${srcDir}/**/*index.html`], ['index'])
   gulp.watch([`${srcDir}/**/*.css`], ['css']);
   gulp.watch([`${srcDir}/fonts/*`], ['fonts']);
   gulp.watch([`${srcDir}/others/*`], ['others']);
