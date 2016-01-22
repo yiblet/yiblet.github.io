@@ -9,6 +9,15 @@
   margin-top:10vh;
 }
 
+.animation-container{
+    position: absolute;
+    left:10px;
+    bottom:10px;
+    text-size:3em;
+    font-family: 'Lucida Console', Monaco, monospace;
+    color: rgb(195, 195, 195);
+}
+
 .fa{
     font-size:3.4em;
     -webkit-transition: all 0.2s 0s ease;
@@ -57,4 +66,8 @@ a, a:link, a:hover, a:visited{
 
 h5{
     font-size:1.1em;
+}
+
+.pre{
+  white-space:pre;
 }
