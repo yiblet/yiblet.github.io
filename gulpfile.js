@@ -5,6 +5,7 @@ var glob = require('glob')
 var source = require('vinyl-source-stream')
 var buff = require('vinyl-buffer')
 var uglify = require('gulp-uglify');
+var sass = require('gulp-sass')
 var srcDir = './src'
 var destDir = './build'
 
@@ -25,7 +26,7 @@ gulp.task('browserify', function () {
 
 gulp.task('vendors', function(){
   return gulp.src(`${srcDir}/vendors/*`)
-  .pipe(gulp.dest(`${destDir}/vendors`)) 
+  .pipe(gulp.dest(`${destDir}/vendors`))
 })
 
 
@@ -33,6 +34,13 @@ gulp.task('css', function () {
   return gulp.src(`${srcDir}/**/*.css`)
   .pipe(gulp.dest(destDir));
 });
+
+
+gulp.task('sass', function(){
+  return gulp.src(`${srcDir}/**/theme.scss`)
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest(destDir))
+})
 
 gulp.task('html', function () {
   return gulp.src([`${srcDir}/**/*.html`, `!${srcDir}/**/*index.html`])
@@ -54,7 +62,7 @@ gulp.task('others', function(){
   .pipe(gulp.dest(`${destDir}/others`));
 })
 
-gulp.task('build', ['browserify', 'fonts', 'vendors', 'css','html','index', 'others'], function(){
+gulp.task('build', ['browserify', 'sass', 'fonts', 'vendors', 'css','html','index', 'others'], function(){
 })
 
 
@@ -65,6 +73,7 @@ gulp.task('watch', ['build'], function () {
   gulp.watch([`${srcDir}/**/*.css`], ['css']);
   gulp.watch([`${srcDir}/fonts/*`], ['fonts']);
   gulp.watch([`${srcDir}/others/*`], ['others']);
+  gulp.watch([`${srcDir}/**/*.scss`], ['sass']);
 });
 
 gulp.task('default', ['watch'])

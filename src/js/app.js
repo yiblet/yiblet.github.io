@@ -85,7 +85,7 @@ app.controller('animationCtrl', ['$scope', function(scope){
         if (nextLines.length > 0){
           nextLines.shift();
           lastLine += 1;
-        } 
+        }
         if (nextLines.length != 0){
           lines.push('')
         }
@@ -123,3 +123,17 @@ app.controller('animationCtrl', ['$scope', function(scope){
     clearInterval(this.interval)
   };
 }])
+
+app.directive('blog', [function(){
+  return {
+    restrict: 'EA',
+    scope: {
+      'loc': '='},
+    templateUrl: function(elem, attr){
+      return attr.loc;
+    }
+  }
+
+}])
+
+module.export = app;

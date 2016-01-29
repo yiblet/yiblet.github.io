@@ -1,6 +1,12 @@
+@import 'pallete';
+
 .frontpage{
     position: relative;
     height:100vh;
+}
+
+none{
+  display:none;
 }
 
 .frontname{
@@ -15,7 +21,7 @@
     bottom:10px;
     text-size:3em;
     font-family: 'Lucida Console', Monaco, monospace;
-    color: rgb(195, 195, 195);
+    color: $grey;
 }
 
 .fa{
@@ -33,13 +39,13 @@
     -ms-transition: all 0.2s 0s ease;
     -o-transition: all 0.2s 0s ease;
     transition: all 0.2s 0s ease;
-    color:white;
-    text-decoration-color: white;
+    color:$textcolor;
+    text-decoration-color: $textcolor;
 }
 
 .icon-text:hover, .icon-text:hover, a:hover .icon-text, a:hover .fa, a:hover .icon-text, a:hover .fa{
-    color:white;
-    text-decoration-color: white;
+    color:$textcolor;
+    text-decoration-color: $textcolor;
 }
 
 .fa:hover{
@@ -49,10 +55,10 @@
 }
 
 body{
-    background-color:#262626;
-    color:white;
-    text-decoration-color: white;
-    font-size: max(2vmin, 10px);
+    background-color:$black-background;
+    color:$textcolor;
+    text-decoration-color: $textcolor;
+    font-size: 2vmin;
 }
 
 .frontpage-row{
@@ -60,8 +66,8 @@ body{
 }
 
 a, a:link, a:hover, a:visited{
-    color:white;
-    text-decoration-color: white;
+    color:$textcolor;
+    text-decoration-color: $textcolor;
 }
 
 h5{
@@ -70,4 +76,8 @@ h5{
 
 .pre{
   white-space:pre;
+}
+
+.blog{
+    min-height: 100vh;
 }
