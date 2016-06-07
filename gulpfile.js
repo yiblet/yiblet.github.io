@@ -1,79 +1,119 @@
+// made me shalom yiblet
 var gulp = require('gulp')
 var browserify = require('browserify')
-var babelify = require('babelify')
-var glob = require('glob')
-var source = require('vinyl-source-stream')
-var buff = require('vinyl-buffer')
-var uglify = require('gulp-uglify')
-var sass = require('gulp-sass')
+var uglify = require('gulp-uglify') //minifies js
+var sass = require('gulp-sass') // compiles the .scss to .css
+var plumber = require('gulp-plumber') // prevents gulp from crashing if the pipes break hence the name plumber
+var tap = require('gulp-tap') //used with browserify
+var gutil = require('gulp-util') //used with plumber
+var gulpif = require('gulp-if') //I use this to change the pipes based on if debug is true or not
+var streamify = require('gulp-streamify') //used to allow gulp pipes after using browserify
+var stripDebug = require('gulp-strip-debug') // removes "console.log" when in production
+
 var srcDir = './src'
 var destDir = './build'
 
-gulp.task('browserify', function () {
-  var files = glob.sync(`${srcDir}/js/*.js`)
-  console.log(files)
-  return browserify({
-    entries: files,
-    debug: true
-  })
-  .transform(babelify)
-  .bundle()
-  .pipe(source('bundle.js'))
-  .pipe(buff())
-  .pipe(uglify())
-  .pipe(gulp.dest(`${destDir}/js`))
+// dirs
+var imagesGlob = `${srcDir}/**/*.+(ico|mpeg4|jpeg|png|jpg|gif|webm|bmp|tif|tiff|gifv)`
+var cssGlob = `${srcDir}/**/*.css`
+var vendorsGlob = `${srcDir}/vendors/*`
+var sassGlob = [`${srcDir}/**/*.scss`, `!${srcDir}/**/dep/**/*.scss`]
+var indexGlob = `${srcDir}/**/*index.+(html|ejs)`
+var htmlGlob = [`${srcDir}/**/*.+(html|ejs)`, `!${indexGlob}`]
+var othersGlob = `${srcDir}/others/*`
+
+var debug = false
+
+gulp.task('vendors', () => {
+  return gulp.src(vendorsGlob)
+    .pipe(plumber())
+    .pipe(gulp.dest(`${destDir}/vendors`))
 })
 
-gulp.task('vendors', function(){
-  return gulp.src(`${srcDir}/vendors/*`)
-  .pipe(gulp.dest(`${destDir}/vendors`))
+gulp.task('browserify', () => {
+  return gulp.src(`${srcDir}/js/main.js`)
+    .pipe(plumber())
+    .pipe(tap(
+      (file) => {
+        var d = require('domain').create();
+        d.on('error', (err) => {
+          gutil.log(
+            gutil.colors.red('Browserify compile error:'),
+            err.message,
+            '\n\t',
+            gutil.colors.cyan('in file'),
+            file.path
+          );
+        })
+        d.run( () => {
+          file.contents = browserify({
+            entries : file.path,
+            debug :  debug
+          })
+          .transform('babelify', {presets : ['es2015', 'react', 'stage-0']})
+          .bundle()
+        })
+      }
+    ))
+    .pipe(gulpif(!debug, streamify(stripDebug())))
+    .pipe(gulpif(!debug, streamify(uglify({
+      compress: true
+    }))))
+    .pipe(gulp.dest(`${destDir}/js`))
+})
+
+gulp.task('css', () => {
+  return gulp.src(cssGlob)
+    .pipe(plumber())
+    .pipe(gulp.dest(`${destDir}`))
+})
+
+gulp.task('images', () => {
+  return gulp.src(imagesGlob)
+    .pipe(plumber())
+    .pipe(gulp.dest(`${destDir}`))
 })
 
 
-gulp.task('css', function () {
-  return gulp.src(`${srcDir}/**/*.css`)
-  .pipe(gulp.dest(destDir))
+gulp.task('sass', () =>{
+  return gulp.src(sassGlob)
+    .pipe(plumber())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(`${destDir}`))
 })
 
-
-gulp.task('sass', function(){
-  return gulp.src(`${srcDir}/**/theme.scss`)
-  .pipe(sass().on('error', sass.logError))
-  .pipe(gulp.dest(destDir))
+gulp.task('html', () => {
+  return gulp.src(htmlGlob)
+    .pipe(plumber())
+    .pipe(gulp.dest(`${destDir}`))
 })
 
-gulp.task('html', function () {
-  return gulp.src([`${srcDir}/**/*.html`, `!${srcDir}/**/*index.html`])
-  .pipe(gulp.dest(destDir))
+gulp.task('index', () => {
+  return gulp.src(indexGlob)
+    .pipe(plumber())
+    .pipe(gulp.dest(''))
 })
 
-gulp.task('index', function () {
-  return gulp.src(`${srcDir}/**/*index.html`)
-  .pipe(gulp.dest(''))
+gulp.task('others', () => {
+  return gulp.src(othersGlob)
+    .pipe(plumber())
+    .pipe(gulp.dest(`${destDir}/others`))
 })
 
-gulp.task('fonts', function () {
-  return gulp.src(`${srcDir}/fonts/*`)
-  .pipe(gulp.dest(`${destDir}/fonts`))
+gulp.task('build', ['browserify', 'sass', 'vendors', 'css','html','index', 'others', 'images'], () => {
 })
 
-gulp.task('others', function(){
-  return gulp.src(`${srcDir}/others/*`)
-  .pipe(gulp.dest(`${destDir}/others`))
-})
-
-gulp.task('build', ['browserify', 'sass', 'fonts', 'vendors', 'css','html','index', 'others'], function(){
-})
-
-
-gulp.task('watch', ['build'], function () {
+function watchFiles() {
   gulp.watch([`${srcDir}/**/*.js`], ['browserify'])
-  gulp.watch([`${srcDir}/**/*.html`, `!${srcDir}/**/*index.html`], ['html'])
-  gulp.watch([`${srcDir}/**/*index.html`], ['index'])
-  gulp.watch([`${srcDir}/**/*.css`], ['css'])
-  gulp.watch([`${srcDir}/fonts/*`], ['fonts'])
-  gulp.watch([`${srcDir}/others/*`], ['others'])
+  gulp.watch(htmlGlob, ['html'])
+  gulp.watch([indexGlob], ['index'])
+  gulp.watch([cssGlob], ['css'])
+  gulp.watch([othersGlob], ['others'])
   gulp.watch([`${srcDir}/**/*.scss`], ['sass'])
-})
+  gulp.watch([imagesGlob], ['images'])
+}
+
+
+gulp.task('watch', ['build'], watchFiles)
 
 gulp.task('default', ['watch'])
