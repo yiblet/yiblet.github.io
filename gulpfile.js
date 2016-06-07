@@ -22,7 +22,7 @@ var indexGlob = `${srcDir}/**/*index.+(html|ejs)`
 var htmlGlob = [`${srcDir}/**/*.+(html|ejs)`, `!${indexGlob}`]
 var othersGlob = `${srcDir}/others/*`
 
-var debug = false
+var debug = true
 
 gulp.task('vendors', () => {
   return gulp.src(vendorsGlob)
@@ -51,6 +51,7 @@ gulp.task('browserify', () => {
             debug :  debug
           })
           .transform('babelify', {presets : ['es2015', 'react', 'stage-0']})
+          .transform('browserify-shim')
           .bundle()
         })
       }

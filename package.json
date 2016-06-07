@@ -12,11 +12,19 @@
         "babelify",
         {
           "presets": [
-            "es2015"
+            "es2015",
+            "react",
+            "stage-0"
           ]
         }
-      ]
+      ],
+      "browserify-shim"
     ]
+  },
+  "browserify-shim": {
+    "jquery": "global:$",
+    "react": "global:React",
+    "react-dom" : "global:ReactDOM"
   },
   "author": "Shalom Yiblet",
   "license": "MIT",
@@ -26,6 +34,7 @@
     "babelify": "^7.2.0",
     "bootstrap": "^3.3.6",
     "browserify": "^13.0.1",
+    "browserify-shim": "^3.8.12",
     "express": "^4.13.3",
     "gulp": "^3.9.1",
     "gulp-if": "^2.0.1",
