@@ -104,7 +104,7 @@ gulp.task('others', () => {
 gulp.task('build', ['browserify', 'sass', 'vendors', 'css','html','index', 'others', 'images'], () => {
 })
 
-function watchFiles() {
+var watchFiles = () => {
   gulp.watch([`${srcDir}/**/*.js`], ['browserify'])
   gulp.watch(htmlGlob, ['html'])
   gulp.watch([indexGlob], ['index'])

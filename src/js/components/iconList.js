@@ -31,6 +31,7 @@ export default class IconList extends React.Component {
   generateIcons = () => {
     var result = [];
     for (let iconProps of this.state.icons) {
+      iconProps.className = 'icon text-center col-xs-6 col-sm-3';
       result.push((<Icon {...iconProps}/>));
     }
     return result;
@@ -39,7 +40,7 @@ export default class IconList extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="clearfix col-sm-6 col-sm-offset-3">
         {this.generateIcons()}
       </div>
     )
