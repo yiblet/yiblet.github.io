@@ -5,6 +5,10 @@
     height:100vh;
 }
 
+.name-container{
+    margin-top: 25vh;
+}
+
 none{
   display:none;
 }
@@ -43,15 +47,23 @@ none{
     text-decoration-color: $textcolor;
 }
 
+.icon-container{
+  margin: 0.4em 0px;
+}
+
 .icon-text:hover, .icon-text:hover, a:hover .icon-text, a:hover .fa, a:hover .icon-text, a:hover .fa{
     color:$textcolor;
     text-decoration-color: $textcolor;
 }
 
+.fa{
+    font-size: 1.9em;
+}
+
 .fa:hover{
-    font-size:3.7em;
+    // font-size:3.7em;
     color:inherit;
-    padding-bottom: 0px;
+    // padding-bottom: 0px;
 }
 
 body{
@@ -59,10 +71,6 @@ body{
     color:$textcolor;
     text-decoration-color: $textcolor;
     font-size: 2vmin;
-}
-
-.frontpage-row{
-    margin-top:30vh;
 }
 
 a, a:link, a:hover, a:visited{
@@ -76,8 +84,4 @@ h5{
 
 .pre{
   white-space:pre;
-}
-
-.blog{
-    min-height: 100vh;
 }

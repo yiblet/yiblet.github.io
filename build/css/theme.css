@@ -3,6 +3,9 @@
   position: relative;
   height: 100vh; }
 
+.name-container {
+  margin-top: 25vh; }
+
 none {
   display: none; }
 
@@ -36,23 +39,24 @@ none {
   color: white;
   text-decoration-color: white; }
 
+.icon-container {
+  margin: 0.4em 0px; }
+
 .icon-text:hover, .icon-text:hover, a:hover .icon-text, a:hover .fa, a:hover .icon-text, a:hover .fa {
   color: white;
   text-decoration-color: white; }
 
+.fa {
+  font-size: 1.9em; }
+
 .fa:hover {
-  font-size: 3.7em;
-  color: inherit;
-  padding-bottom: 0px; }
+  color: inherit; }
 
 body {
   background-color: #262626;
   color: white;
   text-decoration-color: white;
   font-size: 2vmin; }
-
-.frontpage-row {
-  margin-top: 30vh; }
 
 a, a:link, a:hover, a:visited {
   color: white;
@@ -63,6 +67,3 @@ h5 {
 
 .pre {
   white-space: pre; }
-
-.blog {
-  min-height: 100vh; }
